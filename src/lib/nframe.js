@@ -5,3 +5,4 @@
  */
 export { Narea } from "./document/Narea.js";
 export { expandElement } from "./document/expandElement.js";
+export { cssG } from "./document/element/cssGen.js";

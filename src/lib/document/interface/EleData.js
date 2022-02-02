@@ -7,24 +7,29 @@ export class EleData
 {
     /**
      * 距左边
-     * @type {string | number}
+     * @type {string}
      */
     left;
     /**
      * 距顶边
-     * @type {string | number}
+     * @type {string}
      */
     top;
     /**
      * 宽度
-     * @type {string | number}
+     * @type {string}
      */
     width;
     /**
      * 高度
-     * @type {string | number}
+     * @type {string}
      */
     height;
+    /**
+     * 定位方式
+     * @type {"absolute" | "static" | "relative" | "fixed"}
+     */
+    position;
     /**
      * 类型
      * @type {string}
@@ -35,6 +40,11 @@ export class EleData
      * @type {string}
      */
     text;
+    /**
+     * 样式对象
+     * @type {Object<string, string>}
+     */
+    style;
     /**
      * 子节点
      * @type {Array<EleData>}

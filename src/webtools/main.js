@@ -1,11 +1,16 @@
-import { Narea, expandElement } from "../lib/nframe.js";
+import { cssG, Narea, expandElement } from "../lib/nframe.js";
 
 var area = new Narea();
-expandElement({ // 整个
+area.addChild(expandElement({ // 整个
+    width: "100%",
+    height: "100%",
+    position: "absolute",
     child: [{ // 顶栏
-        text: "nFrame-webTools"
+        text: "nFrame-webTools",
+        height: "30px"
     },
     { // 中间
+        height: cssG.diFull("60px"),
         child: [{ // 侧边栏
             height: "100%"
         },
@@ -20,6 +25,7 @@ expandElement({ // 整个
         }]
     },
     { // 底栏
-        text: "无消息"
+        text: "无消息",
+        height: "30px"
     }]
-});
+}));
