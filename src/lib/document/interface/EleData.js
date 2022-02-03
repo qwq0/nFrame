@@ -16,6 +16,16 @@ export class EleData
      */
     top;
     /**
+     * 距右边
+     * @type {string}
+     */
+    right;
+    /**
+     * 距底边
+     * @type {string}
+     */
+    bottom;
+    /**
      * 宽度
      * @type {string}
      */
@@ -30,6 +40,11 @@ export class EleData
      * @type {"absolute" | "static" | "relative" | "fixed"}
      */
     position;
+    /**
+     * 显示方式
+     * @type {"block" | "inline" | "none" | "inline-block"}
+     */
+    display;
     /**
      * 类型
      * @type {string}

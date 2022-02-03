@@ -1,6 +1,6 @@
 # N Frame
-NFrame是一个前端框架(大概)
-NFrame是qwqTown前端使用的框架
+NFrame是一个前端框架(大概)   
+NFrame是qwqTown前端使用的框架   
 目前正在活跃开发 可能有较大的api变动
 
 NFrame可以简化编码工作
