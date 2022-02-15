@@ -4,8 +4,8 @@
  * 主动结束遍历 返回true
  * 未主动结束遍历完全部内容 返回false
  * @template T
- * @param {Array<T>} o
- * @param {function(T, number) : boolean | void} callback
+ * @param {ArrayLike<T>} o
+ * @param {function(T, number):(boolean | void)} callback
  * @returns {boolean}
  */
 export function forEach(o, callback)
@@ -24,8 +24,8 @@ export function forEach(o, callback)
  * 主动结束遍历 返回true
  * 未主动结束遍历完全部内容 返回false
  * @template T
- * @param {Array<T>} o
- * @param {function(T, number) : boolean | void} callback
+ * @param {ArrayLike<T>} o
+ * @param {function(T, number):(boolean | void)} callback
  * @returns {boolean}
  */
 export function forEachRev(o, callback)

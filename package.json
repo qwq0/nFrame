@@ -2,14 +2,14 @@
     "name": "nframe",
     "version": "1.0.0",
     "description": "",
-    "main": "main.js",
+    "main": "",
     "scripts": {
-        "start": "electron .",
+        "webtools": "electron ./src/webtools/main_electron.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "ndzda & qwq",
     "license": "MIT",
     "devDependencies": {
-        "electron": "^16.0.2"
+        "electron": "^17.0.0"
     }
 }

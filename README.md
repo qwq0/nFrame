@@ -29,9 +29,9 @@ NFrame的项目结构可能有别于其他前端结构
 这可能随时发生变化
 |浏览器|兼容性|
 |---|---|
-|Chrome|70+|
-|Firefox|91+|
-|Safari on iOS|14+|
+|Chrome|74+|
+|Firefox|92+|
+|Safari on iOS|14.1+|
 |Edge(Chromium)|与Chrome一致|
 |Edge(Old version)|not support|
 |Internet Explorer|not support|

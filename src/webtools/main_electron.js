@@ -7,7 +7,7 @@ function createWindow()
         height: 500
     });
 
-    win.loadFile("./src/webtools/index.html");
+    win.loadFile("./index.html");
     win.webContents.openDevTools();
 }
 

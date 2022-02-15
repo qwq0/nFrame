@@ -1,15 +1,17 @@
-import { forEach } from "../util/forEach.js";
-import { Nelement } from "./element/Nelement.js";
+import { forEach } from "../../util/forEach.js";
+import { Nelement } from "../element/Nelement.js";
+import { bindTable } from "../event/bindTable.js";
 
 
 /**
  * 遍历展开元素
- * @param {import("./interface/EleData").EleData | Object<string,any>} obj
+ * @typedef {import("./EleData.if").EleData | Object<string, any>} EDObj
+ * @param {EDObj} obj
  * @returns {Nelement}
 */
 function expEle(obj)
 {
-    var now = new Nelement();
+    var now = new Nelement((obj.tagName ? obj.tagName : "div"), obj.id);
 
     forEach([
         "height",
@@ -19,7 +21,8 @@ function expEle(obj)
         "left",
         "right",
         "bottom",
-        "display"
+        "display",
+        "overflow"
     ], (key) =>
     {
         if (obj[key])
@@ -30,6 +33,12 @@ function expEle(obj)
         now.setStyles(obj.style);
     if (obj.text)
         now.setText(obj.text);
+    if (obj.attr)
+        now.setAttrs(obj.attr);
+    if (obj.event) // 如果有绑定事件
+    {
+        forEach(Object.keys(obj.event), (key) => { bindTable[key](now, obj.event[key]); });
+    }
     if (obj.child) // 若有子元素
     {
         forEach(obj.child, (o) => // 遍历
@@ -42,13 +51,19 @@ function expEle(obj)
 
 /**
  * 遍历预处理
- * @param {import("./interface/EleData").EleData | Object<string, any>} obj
+ * @param {EDObj} obj
  * @param {Object<string, any>} def
- * @returns {import("./interface/EleData").EleData | Object<string, any>}
- */
+ * @returns {EDObj}
+*/
 function preC(obj, def)
 {
+    /**
+     * @type {EDObj}
+     */
     var now = {};
+    /**
+     * @type {EDObj}
+     */
     var nowDef = {};
     forEach(Object.keys(def), (key) => { now[key] = def[key]; });
     forEach(Object.keys(obj), (key) =>
@@ -71,11 +86,17 @@ function preC(obj, def)
                 now[key] = obj[key];
         }
     });
+
+    if (now.left && now.right && now.width)
+        delete (now.width);
+    if (now.top && now.bottom && now.height)
+        delete (now.height);
+
     if (obj.child) // 若有子元素
     {
         /**
-         * @type {Array<import("./interface/EleData").EleData | Object<string, any>>}
-         */
+         * @type {Array<EDObj>}
+        */
         now.child = [];
         forEach(obj.child, (o) => // 遍历
         {
@@ -90,9 +111,9 @@ function preC(obj, def)
  * 展开元素
  * 将内容js对象转换为封装的HTML树
  * 请不要转换不受信任的json
- * @param {import("./interface/EleData").EleData | Object<string,any>} obj
+ * @param {EDObj} obj
  * @returns {Nelement}
- */
+*/
 export function expandElement(obj)
 {
     return expEle(preC(obj, {}));
