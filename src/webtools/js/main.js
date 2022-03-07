@@ -95,6 +95,7 @@ area.addChild(expandElement({ // 整个
             }, {
                 id: "filePage",
                 top: "1.5em", bottom: "0",
+                overflow: "hidden auto"
             }]
         }
     }, {

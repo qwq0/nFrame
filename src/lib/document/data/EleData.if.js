@@ -12,6 +12,8 @@ export class EleData
      * @type {string}
     */
     id;
+
+
     /**
      * 距左边(style)
      * @type {string}
@@ -33,7 +35,7 @@ export class EleData
     */
     bottom;
     /**
-     * 宽度
+     * 宽度(style)
      * @type {string}
     */
     width;
@@ -58,6 +60,8 @@ export class EleData
      * @type {overflowValue | `${overflowValue} ${overflowValue}`}
      */
     overflow;
+
+
     /**
      * html标签名(标签类型)
      * @type {string}
@@ -79,6 +83,7 @@ export class EleData
      * @type {Object<string, string>}
     */
     attr;
+
     /**
      * 事件绑定
      */

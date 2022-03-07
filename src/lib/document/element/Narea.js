@@ -1,3 +1,5 @@
+import { forEach } from "../../util/forEach.js";
+
 /**
  * 区域类
  * 管理一个dom子树
@@ -30,7 +32,7 @@ export class Narea
     */
     constructor(view)
     {
-        if(view)
+        if (view)
             this.view = view;
         else
             this.view = document.body;
@@ -46,6 +48,26 @@ export class Narea
         this.child.push(chi);
         this.view.appendChild(chi.e);
         chi.setArea(this);
+    }
+
+    /**
+     * 查找子节点在当前节点中的位置
+     * 不是子节点则返回-1
+     * @param {Nelement} chi
+     * @returns {number}
+     */
+    childInd(chi)
+    {
+        var ind = -1;
+        forEach(this.child, (o, i) =>
+        {
+            if (o == chi)
+            {
+                ind = i;
+                return true;
+            }
+        });
+        return ind;
     }
 
     /**

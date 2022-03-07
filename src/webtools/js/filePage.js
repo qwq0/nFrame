@@ -30,6 +30,7 @@ export function initFilePage(fPage)
         width: "100%",
         style: {
             borderBottom: "1px rgb(100, 100, 100) solid",
+            paddingLeft: "1em"
         },
         text: "点击选择文件夹",
         event: {
@@ -40,7 +41,22 @@ export function initFilePage(fPage)
 
                 var fileList = await getFileList(fileSystemDirectoryHandle);
                 console.log(fileList);
+                fileList.forEach(o =>
+                {
+                    fPage.getArea().getById("filePage_fileList").addChild(expandElement({
+                        width: "100%",
+                        style: {
+                            borderBottom: "1px rgb(100, 100, 100) solid",
+                            paddingLeft: "1em"
+                        },
+                        text: o.name,
+                        event: {}
+                    }));
+                });
             }
         }
+    }));
+    fPage.addChild(expandElement({
+        id: "filePage_fileList"
     }));
 }

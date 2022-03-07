@@ -65,17 +65,57 @@ export class Nelement
 
     /**
      * 添加子节点
-     * @param {Nelement} chi 
+     * @param {Nelement} chi
+     * @param {number} pos 添加到的位置 负数从后到前 超过范围或缺省添加到最后
      */
-    addChild(chi)
+    addChild(chi, pos)
     {
         if (chi.parent)
             chi.remove();
-        this.child.push(chi);
-        this.e.appendChild(chi.e);
+        if (pos == null) // 缺省位置
+        {
+            this.child.push(chi);
+            this.e.appendChild(chi.e);
+        }
+        else if (typeof (pos) == "number") // 数字位置
+        {
+            if (pos >= 0 || pos < this.child.length)
+            {
+                this.e.insertBefore(chi.e, this.child[pos].e);
+                this.child.splice(pos, 0, chi);
+            }
+            else if (pos < 0 || pos >= (-this.child.length))
+            {
+                this.e.insertBefore(chi.e, this.child[this.child.length + pos].e);
+                this.child.splice(this.child.length + pos, 0, chi);
+            }
+            else
+            { }
+        }
         chi.setArea(this.area);
         chi.parent = this;
     }
+
+    /**
+     * 查找子节点在当前节点中的位置
+     * 不是子节点则返回-1
+     * @param {Nelement} chi
+     * @returns {number}
+     */
+    childInd(chi)
+    {
+        var ind = -1;
+        forEach(this.child, (o, i) =>
+        {
+            if (o == chi)
+            {
+                ind = i;
+                return true;
+            }
+        });
+        return ind;
+    }
+
 
     /**
      * 遍历设置元素的区域
