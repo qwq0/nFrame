@@ -6,7 +6,7 @@
         {
             "label": "build lib",
             "type": "shell",
-            "command": "rollup -i src/lib/nframe.js -o dist/nframe.js -f cjs",
+            "command": "rollup -i src/lib/nframe.js -o dist/nframe.js -f es",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

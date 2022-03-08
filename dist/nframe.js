@@ -1,7 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
 /**
  * 正向遍历数组
  * 在回调中返回不为false或void的值主动结束遍历
@@ -255,6 +251,15 @@ class Nelement
     setAttr(attrName, value)
     {
         this.e[attrName] = value;
+    }
+    /**
+     * 获取HTMLElement的属性
+     * @param {string} attrName
+     * @returns {string}
+     */
+    getAttr(attrName)
+    {
+        return this.e[attrName];
     }
     /**
      * 设置多个HTMLElement属性
@@ -651,8 +656,4 @@ const cssG = {
 const docM = {
 };
 
-exports.Narea = Narea;
-exports.Nelement = Nelement;
-exports.cssG = cssG;
-exports.docM = docM;
-exports.expandElement = expandElement;
+export { Narea, Nelement, cssG, docM, expandElement };

@@ -256,6 +256,15 @@
             this.e[attrName] = value;
         }
         /**
+         * 获取HTMLElement的属性
+         * @param {string} attrName
+         * @returns {string}
+         */
+        getAttr(attrName)
+        {
+            return this.e[attrName];
+        }
+        /**
          * 设置多个HTMLElement属性
          * @param {Object<string, string>} obj
          */
