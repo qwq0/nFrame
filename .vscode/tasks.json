@@ -6,7 +6,17 @@
         {
             "label": "build lib",
             "type": "shell",
-            "command": "rollup -i src/lib/nframe.js -o dist/nframe.js -f iife",
+            "command": "rollup -i src/lib/nframe.js -o dist/nframe.js -f cjs",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build lib (iife)",
+            "type": "shell",
+            "command": "rollup -i src/lib/nframe.js -o dist/nframe.iife.js -f iife",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

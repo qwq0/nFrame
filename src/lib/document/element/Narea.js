@@ -1,25 +1,14 @@
-import { forEach } from "../../util/forEach.js";
+import { Nelement } from "./Nelement.js";
 
 /**
  * 区域类
  * 管理一个dom子树
+ * 
+ * 不要继承此类除非你知道你在做什么
+ * @extends Nelement
 */
-export class Narea
+export class Narea extends Nelement
 {
-    /**
-     * 视口元素
-     * @private
-     * @type {HTMLElement}
-    */
-    view = null;
-    /**
-     * 子元素
-     * @package
-     * @typedef {import("./Nelement").Nelement} Nelement
-     * @type {Array<Nelement>}
-    */
-    child = [];
-
     /**
      * 管理id对应表
      * @package
@@ -32,42 +21,9 @@ export class Narea
     */
     constructor(view)
     {
-        if (view)
-            this.view = view;
-        else
-            this.view = document.body;
-        this.view.style.margin = "0";
-    }
-
-    /**
-     * 添加子节点
-     * @param {Nelement} chi 
-    */
-    addChild(chi)
-    {
-        this.child.push(chi);
-        this.view.appendChild(chi.e);
-        chi.setArea(this);
-    }
-
-    /**
-     * 查找子节点在当前节点中的位置
-     * 不是子节点则返回-1
-     * @param {Nelement} chi
-     * @returns {number}
-     */
-    childInd(chi)
-    {
-        var ind = -1;
-        forEach(this.child, (o, i) =>
-        {
-            if (o == chi)
-            {
-                ind = i;
-                return true;
-            }
-        });
-        return ind;
+        super(view ? view : document.body);
+        this.setArea(this);
+        this.setStyle("margin", "0");
     }
 
     /**

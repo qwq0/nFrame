@@ -2,12 +2,14 @@ import { forEach } from "../../util/forEach.js";
 
 /**
  * HTML元素封装
+ * 
+ * 不要继承此类除非你知道你在做什么
  */
 export class Nelement
 {
     /**
      * 元素对象
-     * @package
+     * @private
      * @type {HTMLElement}
      */
     e = null;
@@ -32,6 +34,14 @@ export class Nelement
      */
     area = null;
     /**
+     * 节点隔离
+     * 此节点不再向下传递数据
+     * 包括area
+     * @package
+     * @type {boolean}
+     */
+    isol = false;
+    /**
      * 元素属于的父元素
      * 若父元素为Narea则为null
      * @private
@@ -45,8 +55,9 @@ export class Nelement
     data;
 
     /**
-     * @param {string | HTMLElement} [ele]
-     * @param {string} [id]
+     * 创建或封装元素
+     * @param {string | HTMLElement} [ele] 传递字符串创建元素 传递HTMLElement封装元素 缺省为"div"
+     * @param {string} [id] 元素的id
      */
     constructor(ele, id)
     {
@@ -66,7 +77,7 @@ export class Nelement
     /**
      * 添加子节点
      * @param {Nelement} chi
-     * @param {number} pos 添加到的位置 负数从后到前 超过范围或缺省添加到最后
+     * @param {number} [pos] 添加到的位置 负数从后到前 超过范围或缺省添加到最后
      */
     addChild(chi, pos)
     {
@@ -121,10 +132,13 @@ export class Nelement
      * 遍历设置元素的区域
      * @package
      * @param {Narea} area
+     * @param {boolean} [isol] 为true时隔离此元素 并可对隔离的元素进行修改区域
      */
-    setArea(area)
+    setArea(area, isol)
     {
-        if (this.area == area)
+        if (isol) // 设置隔离
+            this.isol = true;
+        if (this.area == area || (this.isol && (!isol))) // 无需向下或已隔离
             return;
         if (this.area)
         { // 清除原区域中的关联
@@ -136,7 +150,7 @@ export class Nelement
         { // 在新区域中建立关联
             area.idMap.set(this.id, this);
         }
-        if (this.child)
+        if (this.child) // 遍历子节点
             forEach(this.child, (o) => { o.setArea(area); });
     }
 
