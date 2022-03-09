@@ -1,4 +1,4 @@
-import { forEach } from "../../util/forEach.js";
+import { forEach, isAmong } from "../../util/forEach.js";
 
 /**
  * HTML元素封装
@@ -209,11 +209,16 @@ export class Nelement
     }
     /**
      * 修改多个样式
-     * @param {Object<string, string>} obj
+     * @param {Object<string, string | number | Object>} obj
      */
     setStyles(obj)
     {
-        forEach(Object.keys(obj), (key) => { this.e.style[key] = obj[key]; });
+        forEach(Object.keys(obj), (key) =>
+        {
+            var value = obj[key];
+            if (isAmong(typeof (value), "number", "string"))
+                this.e.style[key] = obj[key];
+        });
     }
 
     /**

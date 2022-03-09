@@ -1,4 +1,4 @@
-import { table } from "./keyboardTable.js";
+import { keyPress, keyUp, table } from "./keyboardTable.js";
 import { keyData } from "./keyData.js";
 
 /**
@@ -8,14 +8,23 @@ import { keyData } from "./keyData.js";
  */
 export function keyboardBind(element, callBack)
 {
-    element.addEventListener("keydown", e => callBack(new keyData(
-        (table[e.key] ? table[e.key] : e.key),
-        true,
-        true
-    )));
-    element.addEventListener("keyup", e => callBack(new keyData(
-        (table[e.key] ? table[e.key] : e.key),
-        false,
-        false
-    )));
+    element.addEventListener("keydown", e =>
+    {
+        var keyName = (table[e.key] ? table[e.key] : e.key);
+        callBack(new keyData(
+            keyName,
+            true,
+            keyPress(keyName)
+        ))
+    });
+    element.addEventListener("keyup", e =>
+    {
+        var keyName = (table[e.key] ? table[e.key] : e.key);
+        keyUp(keyName);
+        callBack(new keyData(
+            keyName,
+            false,
+            false
+        ))
+    });
 }

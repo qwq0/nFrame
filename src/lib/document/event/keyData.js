@@ -5,9 +5,22 @@
  */
 export class keyData
 {
-    key = ""; // 键名
-    hold = false; // 当前此指针是否处于按下状态
-    pressing = false; // 当前指针是否正在按下(按下事件)
+    /**
+     * 操作的键名
+     * @type {string}
+     */
+    key = "";
+    /**
+     * 当前键目前是否被按下
+     * @type {boolean}
+     */
+    hold = false;
+    /**
+     * 当前键是否刚按下
+     * (键按下时第一次为true)
+     * @type {boolean}
+     */
+    pressing = false;
     constructor(key, hold, pressing)
     {
         this.key = key;

@@ -19,6 +19,19 @@ function forEach(o, callback)
 }
 
 /**
+ * 判断第一个参数是否属于之后所有的参数
+ * 第一个参数与任何一个之后的参数相等 返回true
+ * 与任何一个都不相等 返回false
+ * @param {any} k
+ * @param  {...any} s
+ * @returns {boolean}
+ */
+function isAmong(k, ...s)
+{
+    return forEach(s, o => o == k);
+}
+
+/**
  * HTML元素封装
  * 
  * 不要继承此类除非你知道你在做什么
@@ -227,11 +240,16 @@ class Nelement
     }
     /**
      * 修改多个样式
-     * @param {Object<string, string>} obj
+     * @param {Object<string, string | number | Object>} obj
      */
     setStyles(obj)
     {
-        forEach(Object.keys(obj), (key) => { this.e.style[key] = obj[key]; });
+        forEach(Object.keys(obj), (key) =>
+        {
+            var value = obj[key];
+            if (isAmong(typeof (value), "number", "string"))
+                this.e.style[key] = obj[key];
+        });
     }
 
     /**
@@ -621,34 +639,32 @@ function expandElement(obj)
 }
 
 /**
- * 100%减去指定值
- * @param {string} value
- * @returns {string}
- */
-function diFull(value)
-{
-    return ("calc(100% - " + value + ")");
-}
-
-/**
- * 构建rgb或rgba颜色颜色
- * @param {number | string} r 0~255
- * @param {number | string} g 0~255
- * @param {number | string} b 0~255
- * @param {number | string} [a] 0~1
- */
-function rgb(r, g, b, a = 1)
-{
-    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
-}
-
-/**
  * css生成
  */
-const cssG = {
-    diFull,
-    rgb
-};
+class cssG
+{
+    /**
+     * 100%减去指定值
+     * @param {string} value
+     * @returns {string}
+     */
+    static diFull(value)
+    {
+        return ("calc(100% - " + value + ")");
+    }
+
+    /**
+     * 构建rgb或rgba颜色颜色
+     * @param {number | string} r 0~255
+     * @param {number | string} g 0~255
+     * @param {number | string} b 0~255
+     * @param {number | string} [a] 0~1
+     */
+    static rgb(r, g, b, a = 1)
+    {
+        return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+    }
+}
 
 /**
  * 文档模块
