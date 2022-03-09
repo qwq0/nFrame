@@ -56,8 +56,7 @@ export class EleData
     display;
     /**
      * 超出部分(style)
-     * @typedef {"visible" | "hidden" | "scroll"} overflowValue
-     * @type {overflowValue | `${overflowValue} ${overflowValue}`}
+     * @type {"visible" | "hidden" | "scroll" | "auto" | string}
      */
     overflow;
 

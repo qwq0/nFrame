@@ -26,7 +26,7 @@
         {
             "label": "build doc",
             "type": "shell",
-            "command": "jsdoc -r -d doc/nframe/ src/lib/",
+            "command": "jsdoc -c doc/config.json -r -d doc/nframe/ src/lib/",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

@@ -10,6 +10,9 @@
     "author": "ndzda & qwq",
     "license": "MIT",
     "devDependencies": {
-        "electron": "^17.0.0"
+        "electron": "^17.0.0",
+        "jsdoc": "^3.6.10",
+        "jsdoc-tsimport-plugin": "^1.0.5",
+        "rollup": "^2.70.0"
     }
 }
