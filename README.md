@@ -20,6 +20,10 @@ NFrame可以简化编码工作
 1. 将整个项目clone下来
 2. 下载dist中需要的文件
 
+## 文档
+在此项目的docs文件夹中
+[在线预览](https://me.qwq7.net/nFrame/docs/nframe/)
+
 ## 从已有前端项目迁移
 NFrame的项目结构可能有别于其他前端结构
 
