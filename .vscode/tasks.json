@@ -24,9 +24,9 @@
             }
         },
         {
-            "label": "build doc",
+            "label": "build docs",
             "type": "shell",
-            "command": "jsdoc -c doc/config.json -r -d doc/nframe/ src/lib/",
+            "command": "jsdoc -c docs/config.json -r -d docs/nframe/ src/lib/",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

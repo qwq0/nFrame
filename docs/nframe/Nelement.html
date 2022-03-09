@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Narea</title>
+    <title>JSDoc: Class: Nelement</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Narea</h1>
+    <h1 class="page-title">Class: Nelement</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Narea<span class="signature">(view<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Nelement<span class="signature">(ele<span class="signature-attributes">opt</span>, id<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">区域类管理一个dom子树不要继承此类除非你知道你在做什么</div>
+            <div class="class-description">HTML元素封装不要继承此类除非你知道你在做什么</div>
         
     
 </header>
@@ -45,12 +45,16 @@
     
 
     
-    <h4 class="name" id="Narea"><span class="type-signature"></span>new Narea<span class="signature">(view<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Nelement"><span class="type-signature"></span>new Nelement<span class="signature">(ele<span class="signature-attributes">opt</span>, id<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
 
 
+
+<div class="description">
+    创建或封装元素
+</div>
 
 
 
@@ -87,12 +91,15 @@
 
         <tr>
             
-                <td class="name"><code>view</code></td>
+                <td class="name"><code>ele</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">string</span>
+|
+
 <span class="param-type">HTMLElement</span>
 
 
@@ -113,7 +120,40 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">传递字符串创建元素 传递HTMLElement封装元素 缺省为"div"</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素的id</td>
         </tr>
 
     
@@ -154,7 +194,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="document_element_Narea.js.html">document/element/Narea.js</a>, <a href="document_element_Narea.js.html#line10">line 10</a>
+        <a href="document_element_Nelement.js.html">document/element/Nelement.js</a>, <a href="document_element_Nelement.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -188,17 +228,6 @@
     </div>
 
     
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="Nelement.html">Nelement</a></li>
-    </ul>
-
-
-    
 
     
 
@@ -206,7 +235,7 @@
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="Narea.html">Narea</a></dt>
+            <dt><a href="Nelement.html">Nelement</a></dt>
             <dd></dd>
         </dl>
     
@@ -256,11 +285,6 @@
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#data">Nelement#data</a>
-    </li></ul></dd>
-    
 
     
 
@@ -282,78 +306,6 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="document_element_Nelement.js.html">document/element/Nelement.js</a>, <a href="document_element_Nelement.js.html#line55">line 55</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="idMap"><span class="type-signature">(package) </span>idMap<span class="type-signature"> :Map.&lt;string, <a href="Nelement.html">Nelement</a>></span></h4>
-
-
-
-
-<div class="description">
-    管理id对应表
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Map.&lt;string, <a href="Nelement.html">Nelement</a>></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="document_element_Narea.js.html">document/element/Narea.js</a>, <a href="document_element_Narea.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -404,11 +356,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#isol">Nelement#isol</a>
-    </li></ul></dd>
     
 
     
@@ -581,11 +528,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#addChild">Nelement#addChild</a>
-    </li></ul></dd>
     
 
     
@@ -773,11 +715,6 @@
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#addEventListener">Nelement#addEventListener</a>
-    </li></ul></dd>
-    
 
     
 
@@ -915,11 +852,6 @@
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#childInd">Nelement#childInd</a>
-    </li></ul></dd>
-    
 
     
 
@@ -1025,11 +957,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#getArea">Nelement#getArea</a>
-    </li></ul></dd>
     
 
     
@@ -1186,11 +1113,6 @@
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#getAttr">Nelement#getAttr</a>
-    </li></ul></dd>
-    
 
     
 
@@ -1248,173 +1170,6 @@
     <dd>
         
 <span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getById"><span class="type-signature"></span>getById<span class="signature">(id<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="Nelement.html">Nelement</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    通过id查找并获取元素
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="document_element_Narea.js.html">document/element/Narea.js</a>, <a href="document_element_Narea.js.html#line34">line 34</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Nelement.html">Nelement</a></span>
 
 
     </dd>
@@ -1512,11 +1267,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#getStyle">Nelement#getStyle</a>
-    </li></ul></dd>
     
 
     
@@ -1623,11 +1373,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#remove">Nelement#remove</a>
-    </li></ul></dd>
     
 
     
@@ -1809,11 +1554,6 @@
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#setArea">Nelement#setArea</a>
-    </li></ul></dd>
-    
 
     
 
@@ -1974,11 +1714,6 @@
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#setAttr">Nelement#setAttr</a>
-    </li></ul></dd>
-    
 
     
 
@@ -2115,11 +1850,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#setAttrs">Nelement#setAttrs</a>
-    </li></ul></dd>
     
 
     
@@ -2266,11 +1996,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#setDisplay">Nelement#setDisplay</a>
-    </li></ul></dd>
     
 
     
@@ -2432,11 +2157,6 @@
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#setStyle">Nelement#setStyle</a>
-    </li></ul></dd>
-    
 
     
 
@@ -2573,11 +2293,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#setStyles">Nelement#setStyles</a>
-    </li></ul></dd>
     
 
     
@@ -2716,11 +2431,6 @@
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Nelement.html#setText">Nelement#setText</a>
-    </li></ul></dd>
-    
 
     
 
@@ -2793,7 +2503,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Mar 09 2022 16:25:00 GMT+0800 (中国标准时间)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Mar 09 2022 16:30:01 GMT+0800 (中国标准时间)
 </footer>
 
 <script> prettyPrint(); </script>
