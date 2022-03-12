@@ -46,9 +46,13 @@ area.addChild(expandElement({ // 整个
             left: "250px", right: "220px",
             child: [{
                 tagName: "iframe",
+                id: "editorPage",
                 style: {
                     border: "none",
                     backgroundColor: "white"
+                },
+                attr: {
+                    src: "./editorPage.html"
                 }
             }]
         },
@@ -114,6 +118,7 @@ area.addChild(expandElement({ // 整个
             }, {
                 id: "templetPage",
                 top: "1.5em", bottom: "0",
+                overflow: "hidden auto"
             }]
         }
     }, {
@@ -132,6 +137,7 @@ area.addChild(expandElement({ // 整个
             }, {
                 id: "elementTreePage",
                 top: "1.5em", bottom: "0",
+                overflow: "hidden auto"
             }]
         }
     }].forEach((o) => // 生成标签列表

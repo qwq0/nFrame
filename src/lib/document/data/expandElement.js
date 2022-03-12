@@ -111,7 +111,7 @@ function preC(obj, def)
  * 展开元素
  * 将内容js对象转换为封装的HTML树
  * 请不要转换不受信任的json
- * @param {EDObj} obj
+ * @param {EDObj} obj EleData格式的对象
  * @returns {Nelement}
 */
 export function expandElement(obj)

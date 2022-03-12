@@ -1,24 +1,7 @@
 import { expandElement } from "../../lib/nframe.js";
+import { FsDApi } from "./fileSystemApi.js";
 
-/**
- * 从文件句柄中获取文件列表
- * @param {any} fileSystemDirectoryHandle
- * @returns {Promise<Array<{name:string, handle:any}>>}
- */
-async function getFileList(fileSystemDirectoryHandle)
-{
-    var list = [];
-    for await (const [key, value] of fileSystemDirectoryHandle.entries())
-    {
-        list.push({
-            name: key,
-            type: value.kind,
-            handle: value
-        });
-    }
-    list.sort((a, b) => (((a.type == "directory" && b.type == "file") || a.name < b.name) ? -1 : 1));
-    return list;
-}
+
 
 /**
  * 初始化模板页
@@ -26,7 +9,21 @@ async function getFileList(fileSystemDirectoryHandle)
  */
 export function initFilePage(fPage)
 {
-    fPage.addChild(expandElement({
+    var area = fPage.getArea();
+    fPage.addChilds(expandElement({
+        width: "100%",
+        style: {
+            borderBottom: "1px rgb(100, 100, 100) solid",
+            paddingLeft: "1em"
+        },
+        text: "清空列表",
+        event: {
+            clickBind: () =>
+            {
+                area.getById("filePage_fileList").removeChilds();
+            }
+        }
+    }), expandElement({
         width: "100%",
         style: {
             borderBottom: "1px rgb(100, 100, 100) solid",
@@ -36,25 +33,35 @@ export function initFilePage(fPage)
         event: {
             clickBind: async () =>
             {
-                // @ts-ignore
-                var fileSystemDirectoryHandle = await window.showDirectoryPicker();
-
-                var fileList = await getFileList(fileSystemDirectoryHandle);
-                console.log(fileList);
+                var fsDApi = new FsDApi();
+                await fsDApi.showDirectoryPicker();
+                var fileList = await fsDApi.getFileList();
                 fileList.forEach(o =>
                 {
-                    fPage.getArea().getById("filePage_fileList").addChild(expandElement({
-                        width: "100%",
-                        style: {
-                            borderBottom: "1px rgb(100, 100, 100) solid",
-                            paddingLeft: "1em"
-                        },
-                        text: o.name,
-                        event: {}
-                    }));
+                    if (o.type == "file")
+                        area.getById("filePage_fileList").addChild(expandElement({
+                            width: "100%",
+                            style: {
+                                borderBottom: "1px rgb(100, 100, 100) solid",
+                                paddingLeft: "1em"
+                            },
+                            text: o.name,
+                            event: {
+                                clickBind: async () =>
+                                {
+                                    area.getById("editorPage")
+                                }
+                            }
+                        }));
                 });
             }
         }
+    }), expandElement({
+        width: "100%",
+        style: {
+            borderBottom: "1px rgb(100, 100, 100) solid"
+        },
+        text: "文件列表(临时)",
     }));
     fPage.addChild(expandElement({
         id: "filePage_fileList"

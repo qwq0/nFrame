@@ -81,6 +81,11 @@ export class Nelement
      * @type {Object&lt;string, any>}
      */
     data;
+    /**
+     * 元素的标签名
+     * @package
+     */
+    tagName;
 
     /**
      * 创建或封装元素
@@ -92,31 +97,68 @@ export class Nelement
         if (id)
             this.id = id;
         if (!ele)
+        {
+            this.tagName = "div";
             this.e = document.createElement("div");
+        }
         else if (typeof (ele) == "string")
+        {
+            this.tagName = ele;
             this.e = document.createElement(ele);
+        }
         else if (ele instanceof HTMLElement)
+        { // 未完善已有元素封装
+            console.warn("(Nelement) Wrapping already created elements can cause some problems");
             this.e = ele;
+            this.tagName = ele.tagName;
+        }
         else
             throw "(Nelement) Unhandled parameter";
     }
 
 
     /**
-     * 添加子节点
+     * 添加单个子节点
+     * 若子节点之前在树中则先移除后加入
      * @param {Nelement} chi
-     * @param {number} [pos] 添加到的位置 负数从后到前 超过范围或缺省添加到最后
      */
-    addChild(chi, pos)
+    addChild(chi)
     {
         if (chi.parent)
             chi.remove();
-        if (pos == null) // 缺省位置
+        this.child.push(chi);
+        this.e.appendChild(chi.e);
+        chi.setArea(this.area);
+        chi.parent = this;
+    }
+
+    /**
+     * 添加多个子节点
+     * 若子节点之前在树中则先移除后加入
+     * @param {Array&lt;Nelement | Array&lt;Nelement>>} chi
+     */
+    addChilds(...chi)
+    {
+        forEach(chi, o =>
         {
-            this.child.push(chi);
-            this.e.appendChild(chi.e);
-        }
-        else if (typeof (pos) == "number") // 数字位置
+            if (Array.isArray(o))
+                forEach(o, s => this.addChild(s));
+            else if (typeof (o) == "object")
+                this.addChild(o)
+        });
+    }
+
+    /**
+     * 插入单个子节点(在中间)
+     * 如果此节点之前在树中则先移除后加入
+     * @param {Nelement} chi
+     * @param {number} pos 添加到的位置 负数从后到前 超过范围添加到最后
+     */
+    insChild(chi, pos)
+    {
+        if (chi.parent)
+            chi.remove();
+        if (typeof (pos) == "number") // 数字位置
         {
             if (pos >= 0 || pos &lt; this.child.length)
             {
@@ -129,7 +171,10 @@ export class Nelement
                 this.child.splice(this.child.length + pos, 0, chi);
             }
             else
-            { }
+            {
+                this.child.push(chi);
+                this.e.appendChild(chi.e);
+            }
         }
         chi.setArea(this.area);
         chi.parent = this;
@@ -137,6 +182,7 @@ export class Nelement
 
     /**
      * 查找子节点在当前节点中的位置
+     * 从0开始
      * 不是子节点则返回-1
      * @param {Nelement} chi
      * @returns {number}
@@ -215,6 +261,19 @@ export class Nelement
         }
         else
             throw "(Nelement) Attempt to remove elements that do not exist in a tree";
+    }
+
+    /**
+     * 移除此节点的子节点
+     * @param {number} [begin] 开始删除的子节点下标 缺省则为从0开始
+     * @param {number} [end] 结束删除的子节点下标 不包含end 缺省则为到结尾
+     */
+    removeChilds(begin = 0, end = this.child.length)
+    {
+        if (end > this.child.length)
+            end = this.child.length;
+        for (var i = begin; i &lt; end; i++)
+            this.child[begin].remove();
     }
 
     /**
@@ -315,13 +374,13 @@ export class Nelement
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="cssG.html">cssG</a></li><li><a href="keyData.html">keyData</a></li><li><a href="Narea.html">Narea</a></li><li><a href="Nelement.html">Nelement</a></li><li><a href="Ntext.html">Ntext</a></li><li><a href="pointerData.html">pointerData</a></li></ul><h3>Interfaces</h3><ul><li><a href="EleData.html">EleData</a></li></ul><h3>Global</h3><ul><li><a href="global.html#bindTable">bindTable</a></li><li><a href="global.html#clickBind">clickBind</a></li><li><a href="global.html#docM">docM</a></li><li><a href="global.html#expandElement">expandElement</a></li><li><a href="global.html#findEmpty">findEmpty</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#forEachRev">forEachRev</a></li><li><a href="global.html#isAmong">isAmong</a></li><li><a href="global.html#keyboardBind">keyboardBind</a></li><li><a href="global.html#keyPress">keyPress</a></li><li><a href="global.html#keyUp">keyUp</a></li><li><a href="global.html#mouseBind">mouseBind</a></li><li><a href="global.html#preC">preC</a></li><li><a href="global.html#styleNumTable">styleNumTable</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#throttleFarm">throttleFarm</a></li><li><a href="global.html#touchBind">touchBind</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="cssG.html">cssG</a></li></ul><h3>Classes</h3><ul><li><a href="keyData.html">keyData</a></li><li><a href="Narea.html">Narea</a></li><li><a href="Nelement.html">Nelement</a></li><li><a href="Ntag_iframe.html">Ntag_iframe</a></li><li><a href="pointerData.html">pointerData</a></li></ul><h3>Interfaces</h3><ul><li><a href="EleData.html">EleData</a></li></ul><h3>Global</h3><ul><li><a href="global.html#bindTable">bindTable</a></li><li><a href="global.html#clickBind">clickBind</a></li><li><a href="global.html#docM">docM</a></li><li><a href="global.html#expandElement">expandElement</a></li><li><a href="global.html#findEmpty">findEmpty</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#forEachRev">forEachRev</a></li><li><a href="global.html#isAmong">isAmong</a></li><li><a href="global.html#keyboardBind">keyboardBind</a></li><li><a href="global.html#keyPress">keyPress</a></li><li><a href="global.html#keyUp">keyUp</a></li><li><a href="global.html#mouseBind">mouseBind</a></li><li><a href="global.html#preC">preC</a></li><li><a href="global.html#styleNumTable">styleNumTable</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#throttleFarm">throttleFarm</a></li><li><a href="global.html#touchBind">touchBind</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Mar 09 2022 16:30:00 GMT+0800 (中国标准时间)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sat Mar 12 2022 10:47:30 GMT+0800 (中国标准时间)
 </footer>
 
 <script> prettyPrint(); </script>

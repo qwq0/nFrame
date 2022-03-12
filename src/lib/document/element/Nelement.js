@@ -53,6 +53,11 @@ export class Nelement
      * @type {Object<string, any>}
      */
     data;
+    /**
+     * 元素的标签名
+     * @package
+     */
+    tagName;
 
     /**
      * 创建或封装元素
@@ -64,31 +69,68 @@ export class Nelement
         if (id)
             this.id = id;
         if (!ele)
+        {
+            this.tagName = "div";
             this.e = document.createElement("div");
+        }
         else if (typeof (ele) == "string")
+        {
+            this.tagName = ele;
             this.e = document.createElement(ele);
+        }
         else if (ele instanceof HTMLElement)
+        { // 未完善已有元素封装
+            console.warn("(Nelement) Wrapping already created elements can cause some problems");
             this.e = ele;
+            this.tagName = ele.tagName;
+        }
         else
             throw "(Nelement) Unhandled parameter";
     }
 
 
     /**
-     * 添加子节点
+     * 添加单个子节点
+     * 若子节点之前在树中则先移除后加入
      * @param {Nelement} chi
-     * @param {number} [pos] 添加到的位置 负数从后到前 超过范围或缺省添加到最后
      */
-    addChild(chi, pos)
+    addChild(chi)
     {
         if (chi.parent)
             chi.remove();
-        if (pos == null) // 缺省位置
+        this.child.push(chi);
+        this.e.appendChild(chi.e);
+        chi.setArea(this.area);
+        chi.parent = this;
+    }
+
+    /**
+     * 添加多个子节点
+     * 若子节点之前在树中则先移除后加入
+     * @param {Array<Nelement | Array<Nelement>>} chi
+     */
+    addChilds(...chi)
+    {
+        forEach(chi, o =>
         {
-            this.child.push(chi);
-            this.e.appendChild(chi.e);
-        }
-        else if (typeof (pos) == "number") // 数字位置
+            if (Array.isArray(o))
+                forEach(o, s => this.addChild(s));
+            else if (typeof (o) == "object")
+                this.addChild(o)
+        });
+    }
+
+    /**
+     * 插入单个子节点(在中间)
+     * 如果此节点之前在树中则先移除后加入
+     * @param {Nelement} chi
+     * @param {number} pos 添加到的位置 负数从后到前 超过范围添加到最后
+     */
+    insChild(chi, pos)
+    {
+        if (chi.parent)
+            chi.remove();
+        if (typeof (pos) == "number") // 数字位置
         {
             if (pos >= 0 || pos < this.child.length)
             {
@@ -101,7 +143,10 @@ export class Nelement
                 this.child.splice(this.child.length + pos, 0, chi);
             }
             else
-            { }
+            {
+                this.child.push(chi);
+                this.e.appendChild(chi.e);
+            }
         }
         chi.setArea(this.area);
         chi.parent = this;
@@ -109,6 +154,7 @@ export class Nelement
 
     /**
      * 查找子节点在当前节点中的位置
+     * 从0开始
      * 不是子节点则返回-1
      * @param {Nelement} chi
      * @returns {number}
@@ -187,6 +233,19 @@ export class Nelement
         }
         else
             throw "(Nelement) Attempt to remove elements that do not exist in a tree";
+    }
+
+    /**
+     * 移除此节点的子节点
+     * @param {number} [begin] 开始删除的子节点下标 缺省则为从0开始
+     * @param {number} [end] 结束删除的子节点下标 不包含end 缺省则为到结尾
+     */
+    removeChilds(begin = 0, end = this.child.length)
+    {
+        if (end > this.child.length)
+            end = this.child.length;
+        for (var i = begin; i < end; i++)
+            this.child[begin].remove();
     }
 
     /**

@@ -1,17 +1,17 @@
 /**
  * css生成
+ * @namespace
  */
-export class cssG
-{
+export const cssG = {
     /**
      * 100%减去指定值
      * @param {string} value
      * @returns {string}
      */
-    static diFull(value)
+    diFull: (value) =>
     {
         return ("calc(100% - " + value + ")");
-    }
+    },
 
     /**
      * 构建rgb或rgba颜色颜色
@@ -20,7 +20,7 @@ export class cssG
      * @param {number | string} b 0~255
      * @param {number | string} [a] 0~1
      */
-    static rgb(r, g, b, a = 1)
+    rgb: (r, g, b, a = 1) =>
     {
         return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
     }
