@@ -1,5 +1,5 @@
-import { expandElement } from "../../lib/nframe.js";
-import { FsDApi } from "./fileSystemApi.js";
+import { expandElement, Ntag } from "../../lib/nframe.js";
+import { FsDApi, FsFApi } from "./fileSystemApi.js";
 
 
 
@@ -10,6 +10,10 @@ import { FsDApi } from "./fileSystemApi.js";
 export function initFilePage(fPage)
 {
     var area = fPage.getArea();
+
+    var editorPage = area.getById("editorPage");
+    var editorC = Ntag.iframe(editorPage);
+
     fPage.addChilds(expandElement({
         width: "100%",
         style: {
@@ -49,7 +53,10 @@ export function initFilePage(fPage)
                             event: {
                                 clickBind: async () =>
                                 {
-                                    area.getById("editorPage")
+                                    /** @type {FsFApi} */
+                                    var fsFApi = (o.fsApi instanceof FsFApi ? o.fsApi : null);
+                                    console.log(await fsFApi.getText());
+                                    editorC.reload();
                                 }
                             }
                         }));

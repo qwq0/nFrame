@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: document/event/click.js</title>
+    <title>JSDoc: Source: document/element/Ntag.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: document/event/click.js</h1>
+    <h1 class="page-title">Source: document/element/Ntag.js</h1>
 
     
 
@@ -26,18 +26,21 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Nelement } from "../element/Nelement.js";
+            <pre class="prettyprint source linenums"><code>import { Nelement } from "./Nelement.js";
+import { Ntag_iframe } from "./tags/iframe.js";
 
 /**
- * 点击事件处理
- * @param {Nelement} element 绑定到元素
- * @param {function():void} callBack 回调
+ * 新建标签上下文
+ * @namespace
  */
-export function clickBind(element, callBack)
-{
-    element.addEventListener("click", (/** @type {MouseEvent} */ e) => callBack(), false);
-
-}</code></pre>
+export const Ntag = {
+    /**
+     * 新建iframe标签上下文
+     * @param {Nelement} o
+     * @returns {Ntag_iframe}
+    */
+    iframe: (o) => (new Ntag_iframe(o))
+};</code></pre>
         </article>
     </section>
 

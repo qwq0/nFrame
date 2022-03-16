@@ -32,6 +32,16 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }
+        },
+        {
+            "label": "build webtools",
+            "type": "shell",
+            "command": "rollup -i src/webtools/nframe.js -o dist/nframe.js -f iife",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
     ]
 }

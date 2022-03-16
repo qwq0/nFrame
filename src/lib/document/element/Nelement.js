@@ -9,7 +9,7 @@ export class Nelement
 {
     /**
      * 元素对象
-     * @private
+     * @package
      * @type {HTMLElement}
      */
     e = null;
@@ -80,9 +80,10 @@ export class Nelement
         }
         else if (ele instanceof HTMLElement)
         { // 未完善已有元素封装
-            console.warn("(Nelement) Wrapping already created elements can cause some problems");
             this.e = ele;
-            this.tagName = ele.tagName;
+            this.tagName = ele.tagName.toLowerCase();
+            if (this.tagName != "body")
+                console.warn("(Nelement) Wrapping already created elements can cause some problems");
         }
         else
             throw "(Nelement) Unhandled parameter";
@@ -116,7 +117,7 @@ export class Nelement
             if (Array.isArray(o))
                 forEach(o, s => this.addChild(s));
             else if (typeof (o) == "object")
-                this.addChild(o)
+                this.addChild(o);
         });
     }
 
@@ -212,9 +213,10 @@ export class Nelement
      */
     remove()
     {
+        var index = -1;
         if (this.parent)
         {
-            var index = this.parent.child.indexOf(this);
+            index = this.parent.child.indexOf(this);
             if (index == -1)
                 throw "(Nelement) Wrong tree structure";
             this.parent.child.splice(index, 1);
@@ -224,7 +226,7 @@ export class Nelement
         }
         else if (this.area)
         {
-            var index = this.area.child.indexOf(this);
+            index = this.area.child.indexOf(this);
             if (index == -1)
                 throw "(Nelement) Wrong tree structure";
             this.area.child.splice(index, 1);

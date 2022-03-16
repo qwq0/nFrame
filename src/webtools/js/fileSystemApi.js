@@ -9,6 +9,7 @@ export class FsDApi
 {
     /**
      * 句柄
+     * @private
      * @type {any}
      */
     handle;
@@ -67,6 +68,7 @@ export class FsFApi
 {
     /**
      * 句柄
+     * @private
      * @type {any}
      */
     handle;
@@ -87,6 +89,15 @@ export class FsFApi
     async getFile()
     {
         return await this.handle.getFile();
+    }
+
+    /**
+     * 以utf-8编码读取文本文件
+     * @returns {Promise<string>}
+     */
+    async getText()
+    {
+        return (await (await this.getFile()).text());
     }
 
 }

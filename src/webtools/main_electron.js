@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { app, BrowserWindow, Menu } = require("electron");
 
 function createWindow()

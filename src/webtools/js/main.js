@@ -52,7 +52,8 @@ area.addChild(expandElement({ // 整个
                     backgroundColor: "white"
                 },
                 attr: {
-                    src: "./editorPage.html"
+                    src: "./editorPage.html",
+                    sandbox: "allow-scripts"
                 }
             }]
         },

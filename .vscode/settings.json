@@ -1,0 +1,12 @@
+{
+    "editor.unicodeHighlight.includeStrings": false,
+    "editor.unicodeHighlight.nonBasicASCII": false,
+
+    "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+    "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
+
+    "eslint.enable": true,
+    "eslint.validate": [
+        "javascript"
+    ]
+}
