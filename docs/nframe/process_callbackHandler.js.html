@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: process/callbackHandler.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,125 +17,92 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: process/callbackHandler.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * 管理一个回调
+ * 使其成为异步函数
+ * 
+ * 此类未完成
+ * 
+ * @template T
+ */
+export class CallbackHandler
+{
 
+    /**
+     * @private
+     * @type {function(T):void}
+     */
+    callback;
 
-    <h3> </h3>
+    constructor()
+    { }
 
+    /**
+     * 获取回调函数
+     * @returns {function(T):void}
+     */
+    getCBFunction()
+    {
+        return this.callback;
+    }
 
+    /**
+     * 等待直到函数执行
+     * @async
+     */
+    wait()
+    {
+        return (new Promise((resolve, reject) =>
+        {
+        }));
+    }
+}
 
+/**
+ * 代理回调
+ * 作为一个异步函数
+ * @template T
+ * @param {(arg0: (e: T) => void) => void} executor
+ * @param {(arg0: any) => void} [after]
+ * @param {(arg0: (e: any) => void) => void} [errorExecutor]
+ * @param {(arg0: any) => void} [errorAfter]
+ * @returns {Promise&lt;T>}
+ */
+export function proxyCallback(executor, after, errorExecutor, errorAfter)
+{
+    return (new Promise((resolve, reject) =>
+    {
+        var proxy = (/** @type {T} */ e) =>
+        {
+            resolve(e);
+            if (after)
+                after(proxy);
+        };
+        executor(proxy);
+        if (errorExecutor)
+        {
+            var errorProxy = (/** @type {any} */ e) =>
+            {
+                reject(e);
+                if (errorAfter)
+                    errorAfter(errorExecutor);
+            };
+            errorExecutor(errorProxy);
+        }
 
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>nframe.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">nframe lib</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="nframe.js.html">nframe.js</a>, <a href="nframe.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    }));
+}</code></pre>
+        </article>
+    </section>
 
 
 

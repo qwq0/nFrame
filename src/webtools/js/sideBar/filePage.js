@@ -1,11 +1,11 @@
-import { expandElement, Ntag } from "../../lib/nframe.js";
+import { expandElement, Ntag, proxyCallback } from "../../../lib/nframe.js";
 import { FsDApi, FsFApi } from "./fileSystemApi.js";
 
 
 
 /**
  * 初始化模板页
- * @param {import("../../lib/nframe").Nelement} fPage
+ * @param {import("../../../lib/nframe").Nelement} fPage
  */
 export function initFilePage(fPage)
 {
@@ -13,6 +13,7 @@ export function initFilePage(fPage)
 
     var editorPage = area.getById("editorPage");
     var editorC = Ntag.iframe(editorPage);
+
 
     fPage.addChilds(expandElement({
         width: "100%",
@@ -55,8 +56,19 @@ export function initFilePage(fPage)
                                 {
                                     /** @type {FsFApi} */
                                     var fsFApi = (o.fsApi instanceof FsFApi ? o.fsApi : null);
-                                    console.log(await fsFApi.getText());
                                     editorC.reload();
+                                    await proxyCallback(e => editorPage.addEventListener("load", e), e => editorPage.removeEventListener("load", e));
+                                    editorC.postMessage({
+                                        type: "order",
+                                        operate: "empty"
+                                    });
+                                    editorC.postMessage({
+                                        type: "order",
+                                        operate: "expand",
+                                        content: {
+                                            text: await fsFApi.getText()
+                                        }
+                                    });
                                 }
                             }
                         }));

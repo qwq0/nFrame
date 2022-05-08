@@ -332,10 +332,21 @@ export class Nelement
      * 添加事件监听器
      * @param {string} eventName
      * @param {function(Event):void} callBack
-     * @param {boolean | AddEventListenerOptions} options
+     * @param {boolean | AddEventListenerOptions} [options]
      */
     addEventListener(eventName, callBack, options)
     {
         this.e.addEventListener(eventName, callBack, options);
+    }
+
+    /**
+     * 移除事件监听器
+     * @param {string} eventName
+     * @param {function(Event):void} callBack
+     * @param {boolean | EventListenerOptions} [options]
+     */
+    removeEventListener(eventName, callBack, options)
+    {
+        this.e.removeEventListener(eventName, callBack, options);
     }
 }

@@ -43,7 +43,7 @@ var nFrame = (function (exports) {
     {
         /**
          * 元素对象
-         * @private
+         * @package
          * @type {HTMLElement}
          */
         e = null;
@@ -87,6 +87,11 @@ var nFrame = (function (exports) {
          * @type {Object<string, any>}
          */
         data;
+        /**
+         * 元素的标签名
+         * @package
+         */
+        tagName;
 
         /**
          * 创建或封装元素
@@ -98,31 +103,69 @@ var nFrame = (function (exports) {
             if (id)
                 this.id = id;
             if (!ele)
+            {
+                this.tagName = "div";
                 this.e = document.createElement("div");
+            }
             else if (typeof (ele) == "string")
+            {
+                this.tagName = ele;
                 this.e = document.createElement(ele);
+            }
             else if (ele instanceof HTMLElement)
+            { // 未完善已有元素封装
                 this.e = ele;
+                this.tagName = ele.tagName.toLowerCase();
+                if (this.tagName != "body")
+                    console.warn("(Nelement) Wrapping already created elements can cause some problems");
+            }
             else
                 throw "(Nelement) Unhandled parameter";
         }
 
 
         /**
-         * 添加子节点
+         * 添加单个子节点
+         * 若子节点之前在树中则先移除后加入
          * @param {Nelement} chi
-         * @param {number} [pos] 添加到的位置 负数从后到前 超过范围或缺省添加到最后
          */
-        addChild(chi, pos)
+        addChild(chi)
         {
             if (chi.parent)
                 chi.remove();
-            if (pos == null) // 缺省位置
+            this.child.push(chi);
+            this.e.appendChild(chi.e);
+            chi.setArea(this.area);
+            chi.parent = this;
+        }
+
+        /**
+         * 添加多个子节点
+         * 若子节点之前在树中则先移除后加入
+         * @param {Array<Nelement | Array<Nelement>>} chi
+         */
+        addChilds(...chi)
+        {
+            forEach(chi, o =>
             {
-                this.child.push(chi);
-                this.e.appendChild(chi.e);
-            }
-            else if (typeof (pos) == "number") // 数字位置
+                if (Array.isArray(o))
+                    forEach(o, s => this.addChild(s));
+                else if (typeof (o) == "object")
+                    this.addChild(o);
+            });
+        }
+
+        /**
+         * 插入单个子节点(在中间)
+         * 如果此节点之前在树中则先移除后加入
+         * @param {Nelement} chi
+         * @param {number} pos 添加到的位置 负数从后到前 超过范围添加到最后
+         */
+        insChild(chi, pos)
+        {
+            if (chi.parent)
+                chi.remove();
+            if (typeof (pos) == "number") // 数字位置
             {
                 if (pos >= 0 || pos < this.child.length)
                 {
@@ -135,7 +178,10 @@ var nFrame = (function (exports) {
                     this.child.splice(this.child.length + pos, 0, chi);
                 }
                 else
-                ;
+                {
+                    this.child.push(chi);
+                    this.e.appendChild(chi.e);
+                }
             }
             chi.setArea(this.area);
             chi.parent = this;
@@ -143,6 +189,7 @@ var nFrame = (function (exports) {
 
         /**
          * 查找子节点在当前节点中的位置
+         * 从0开始
          * 不是子节点则返回-1
          * @param {Nelement} chi
          * @returns {number}
@@ -200,9 +247,10 @@ var nFrame = (function (exports) {
          */
         remove()
         {
+            var index = -1;
             if (this.parent)
             {
-                var index = this.parent.child.indexOf(this);
+                index = this.parent.child.indexOf(this);
                 if (index == -1)
                     throw "(Nelement) Wrong tree structure";
                 this.parent.child.splice(index, 1);
@@ -212,7 +260,7 @@ var nFrame = (function (exports) {
             }
             else if (this.area)
             {
-                var index = this.area.child.indexOf(this);
+                index = this.area.child.indexOf(this);
                 if (index == -1)
                     throw "(Nelement) Wrong tree structure";
                 this.area.child.splice(index, 1);
@@ -221,6 +269,19 @@ var nFrame = (function (exports) {
             }
             else
                 throw "(Nelement) Attempt to remove elements that do not exist in a tree";
+        }
+
+        /**
+         * 移除此节点的子节点
+         * @param {number} [begin] 开始删除的子节点下标 缺省则为从0开始
+         * @param {number} [end] 结束删除的子节点下标 不包含end 缺省则为到结尾
+         */
+        removeChilds(begin = 0, end = this.child.length)
+        {
+            if (end > this.child.length)
+                end = this.child.length;
+            for (var i = begin; i < end; i++)
+                this.child[begin].remove();
         }
 
         /**
@@ -305,11 +366,22 @@ var nFrame = (function (exports) {
          * 添加事件监听器
          * @param {string} eventName
          * @param {function(Event):void} callBack
-         * @param {boolean | AddEventListenerOptions} options
+         * @param {boolean | AddEventListenerOptions} [options]
          */
         addEventListener(eventName, callBack, options)
         {
             this.e.addEventListener(eventName, callBack, options);
+        }
+
+        /**
+         * 移除事件监听器
+         * @param {string} eventName
+         * @param {function(Event):void} callBack
+         * @param {boolean | EventListenerOptions} [options]
+         */
+        removeEventListener(eventName, callBack, options)
+        {
+            this.e.removeEventListener(eventName, callBack, options);
         }
     }
 
@@ -633,7 +705,7 @@ var nFrame = (function (exports) {
      * 展开元素
      * 将内容js对象转换为封装的HTML树
      * 请不要转换不受信任的json
-     * @param {EDObj} obj
+     * @param {EDObj} obj EleData格式的对象
      * @returns {Nelement}
     */
     function expandElement(obj)
@@ -643,18 +715,18 @@ var nFrame = (function (exports) {
 
     /**
      * css生成
+     * @namespace
      */
-    class cssG
-    {
+    const cssG = {
         /**
          * 100%减去指定值
          * @param {string} value
          * @returns {string}
          */
-        static diFull(value)
+        diFull: (value) =>
         {
             return ("calc(100% - " + value + ")");
-        }
+        },
 
         /**
          * 构建rgb或rgba颜色颜色
@@ -663,11 +735,11 @@ var nFrame = (function (exports) {
          * @param {number | string} b 0~255
          * @param {number | string} [a] 0~1
          */
-        static rgb(r, g, b, a = 1)
+        rgb: (r, g, b, a = 1) =>
         {
             return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
         }
-    }
+    };
 
     /**
      * 文档模块
@@ -675,11 +747,155 @@ var nFrame = (function (exports) {
     const docM = {
     };
 
+    /**
+     * iframe标签上下文
+     */
+    class Ntag_iframe
+    {
+        /**
+         * 元素封装
+         * @private
+         * @type {Nelement}
+         */
+        nelement = null;
+
+        /**
+         * 元素对象
+         * @private
+         * @type {HTMLIFrameElement}
+         */
+        e = null;
+
+        /**
+         * @param {Nelement} nelement
+         */
+        constructor(nelement)
+        {
+            if (!(nelement.e instanceof HTMLIFrameElement))
+                throw "(Ntag_iframe) Wrong tagType(tag name)";
+            this.nelement = nelement;
+            this.e = nelement.e;
+        }
+
+        /**
+         * @returns {Nelement}
+         */
+        getNelement()
+        {
+            return this.nelement;
+        }
+
+        /**
+         * 刷新
+         * 仅设置src属性时
+         */
+        reload()
+        {
+            this.e.contentWindow.location.replace(this.e.src);
+        }
+
+        /**
+         * 刷新
+         * 仅同源时
+         */
+        reload_so()
+        {
+            this.e.contentWindow.location.reload();
+        }
+
+        /**
+         * 设置src
+         * 通常这将使iframe跳转到指定src
+         * @param {string} src
+         */
+        setSrc(src)
+        {
+            this.e.src = src;
+        }
+        /**
+         * 设置srcdoc
+         * 通常这将使iframe显示指定dom字符串
+         * @param {string} srcdoc
+         */
+        setSrcdoc(srcdoc)
+        {
+            this.e.srcdoc = srcdoc;
+        }
+
+        /**
+         * 发送信息
+         * @param {any} message
+         */
+        postMessage(message)
+        {
+            this.e.contentWindow.postMessage(message, "*");
+        }
+    }
+
+    /**
+     * 新建标签上下文
+     * @namespace
+     */
+    const Ntag = {
+        /**
+         * 新建iframe标签上下文
+         * @param {Nelement} o
+         * @returns {Ntag_iframe}
+        */
+        iframe: (o) => (new Ntag_iframe(o))
+    };
+
+    /**
+     * 管理一个回调
+     * 使其成为异步函数
+     * 
+     * 此类未完成
+     * 
+     * @template T
+     */
+
+    /**
+     * 代理回调
+     * 作为一个异步函数
+     * @template T
+     * @param {(arg0: (e: T) => void) => void} executor
+     * @param {(arg0: any) => void} [after]
+     * @param {(arg0: (e: any) => void) => void} [errorExecutor]
+     * @param {(arg0: any) => void} [errorAfter]
+     * @returns {Promise<T>}
+     */
+    function proxyCallback(executor, after, errorExecutor, errorAfter)
+    {
+        return (new Promise((resolve, reject) =>
+        {
+            var proxy = (/** @type {T} */ e) =>
+            {
+                resolve(e);
+                if (after)
+                    after(proxy);
+            };
+            executor(proxy);
+            if (errorExecutor)
+            {
+                var errorProxy = (/** @type {any} */ e) =>
+                {
+                    reject(e);
+                    if (errorAfter)
+                        errorAfter(errorExecutor);
+                };
+                errorExecutor(errorProxy);
+            }
+
+        }));
+    }
+
     exports.Narea = Narea;
     exports.Nelement = Nelement;
+    exports.Ntag = Ntag;
     exports.cssG = cssG;
     exports.docM = docM;
     exports.expandElement = expandElement;
+    exports.proxyCallback = proxyCallback;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

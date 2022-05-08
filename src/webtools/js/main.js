@@ -1,7 +1,7 @@
 import { cssG, Narea, expandElement, Nelement } from "../../lib/nframe.js";
-import { initElementTreePage } from "./elementTreePage.js";
-import { initFilePage } from "./filePage.js";
-import { initTempletPage } from "./templetPage.js";
+import { initElementTreePage } from "./sideBar/elementTreePage.js";
+import { initFilePage } from "./sideBar/filePage.js";
+import { initTempletPage } from "./sideBar/templetPage.js";
 
 var area = new Narea();
 area.addChild(expandElement({ // 整个

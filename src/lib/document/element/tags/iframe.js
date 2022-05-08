@@ -31,12 +31,29 @@ export class Ntag_iframe
     }
 
     /**
+     * @returns {Nelement}
+     */
+    getNelement()
+    {
+        return this.nelement;
+    }
+
+    /**
      * 刷新
      * 仅设置src属性时
      */
     reload()
     {
         this.e.contentWindow.location.replace(this.e.src);
+    }
+
+    /**
+     * 刷新
+     * 仅同源时
+     */
+    reload_so()
+    {
+        this.e.contentWindow.location.reload();
     }
 
     /**
@@ -56,5 +73,14 @@ export class Ntag_iframe
     setSrcdoc(srcdoc)
     {
         this.e.srcdoc = srcdoc;
+    }
+
+    /**
+     * 发送信息
+     * @param {any} message
+     */
+    postMessage(message)
+    {
+        this.e.contentWindow.postMessage(message, "*");
     }
 }

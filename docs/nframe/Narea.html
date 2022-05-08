@@ -898,7 +898,7 @@
     
 
     
-    <h4 class="name" id="addEventListener"><span class="type-signature"></span>addEventListener<span class="signature">(eventName, callBack, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addEventListener"><span class="type-signature"></span>addEventListener<span class="signature">(eventName, callBack, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -930,6 +930,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -955,6 +957,14 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -977,6 +987,14 @@
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -1003,6 +1021,16 @@
             
             </td>
 
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -2304,6 +2332,225 @@
     
 
     
+    <h4 class="name" id="removeEventListener"><span class="type-signature"></span>removeEventListener<span class="signature">(eventName, callBack, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    移除事件监听器
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callBack</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+|
+
+<span class="param-type">EventListenerOptions</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Nelement.html#removeEventListener">Nelement#removeEventListener</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="document_element_Nelement.js.html">document/element/Nelement.js</a>, <a href="document_element_Nelement.js.html#line348">line 348</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="setArea"><span class="type-signature">(package) </span>setArea<span class="signature">(area, isol<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
@@ -3406,13 +3653,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="cssG.html">cssG</a></li><li><a href="Ntag.html">Ntag</a></li></ul><h3>Classes</h3><ul><li><a href="keyData.html">keyData</a></li><li><a href="Narea.html">Narea</a></li><li><a href="Nelement.html">Nelement</a></li><li><a href="Ntag_iframe.html">Ntag_iframe</a></li><li><a href="pointerData.html">pointerData</a></li></ul><h3>Interfaces</h3><ul><li><a href="EleData.html">EleData</a></li></ul><h3>Global</h3><ul><li><a href="global.html#bindTable">bindTable</a></li><li><a href="global.html#clickBind">clickBind</a></li><li><a href="global.html#docM">docM</a></li><li><a href="global.html#expandElement">expandElement</a></li><li><a href="global.html#findEmpty">findEmpty</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#forEachRev">forEachRev</a></li><li><a href="global.html#isAmong">isAmong</a></li><li><a href="global.html#keyboardBind">keyboardBind</a></li><li><a href="global.html#keyPress">keyPress</a></li><li><a href="global.html#keyUp">keyUp</a></li><li><a href="global.html#mouseBind">mouseBind</a></li><li><a href="global.html#preC">preC</a></li><li><a href="global.html#styleNumTable">styleNumTable</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#throttleFarm">throttleFarm</a></li><li><a href="global.html#touchBind">touchBind</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="cssG.html">cssG</a></li><li><a href="Ntag.html">Ntag</a></li></ul><h3>Classes</h3><ul><li><a href="CallbackHandler.html">CallbackHandler</a></li><li><a href="keyData.html">keyData</a></li><li><a href="Narea.html">Narea</a></li><li><a href="Nelement.html">Nelement</a></li><li><a href="Ntag_iframe.html">Ntag_iframe</a></li><li><a href="pointerData.html">pointerData</a></li></ul><h3>Interfaces</h3><ul><li><a href="EleData.html">EleData</a></li></ul><h3>Global</h3><ul><li><a href="global.html#bindTable">bindTable</a></li><li><a href="global.html#clickBind">clickBind</a></li><li><a href="global.html#docM">docM</a></li><li><a href="global.html#expandElement">expandElement</a></li><li><a href="global.html#findEmpty">findEmpty</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#forEachRev">forEachRev</a></li><li><a href="global.html#isAmong">isAmong</a></li><li><a href="global.html#keyboardBind">keyboardBind</a></li><li><a href="global.html#keyPress">keyPress</a></li><li><a href="global.html#keyUp">keyUp</a></li><li><a href="global.html#mouseBind">mouseBind</a></li><li><a href="global.html#preC">preC</a></li><li><a href="global.html#proxyCallback">proxyCallback</a></li><li><a href="global.html#styleNumTable">styleNumTable</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#throttleFarm">throttleFarm</a></li><li><a href="global.html#touchBind">touchBind</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Mar 17 2022 01:43:27 GMT+0800 (中国标准时间)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sun May 08 2022 11:35:18 GMT+0800 (中国标准时间)
 </footer>
 
 <script> prettyPrint(); </script>
